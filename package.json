@@ -1,0 +1,23 @@
+{
+	"name": "node-dbhub",
+	"version": "0.0.0",
+	"description": "A library for accessing and using SQLite databases on DBHub.io",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Neyl",
+	"license": "ISC",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/neyl66/node-dbhub.git"
+	},
+	"bugs": {
+		"url": "https://github.com/neyl66/node-dbhub/issues"
+	},
+	"homepage": "https://github.com/neyl66/node-dbhub#readme",
+	"keywords": [
+		"dbhub"
+	]
+}
