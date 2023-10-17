@@ -21,6 +21,7 @@ class DBHub {
         const version = 1;
 
         const endpoints = {
+            branches: `/v${version}/branches`,
             databases: `/v${version}/databases`,
             columns: `/v${version}/columns`,
             query: `/v${version}/query`,
@@ -57,6 +58,29 @@ class DBHub {
 
         return await response.json();
     }
+
+    /**
+     * Returns the list of branches for a database
+     *
+     * @param {string} dbowner The owner of the database
+     * @param {string} dbname The name of the database
+     *
+     * @returns {Promise<object>}
+     */
+    async get_branches(dbowner, dbname) {
+        const url = `${this.base_url}${this.endpoints.branches}`;
+
+        const parameters = {
+            dbowner,
+            dbname,
+        };
+
+        const data = await this.make_request(url, parameters);
+
+        return data;
+    }
+
+
 
     /**
      * Returns the list of databases in the requesting users account
