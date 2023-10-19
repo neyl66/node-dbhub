@@ -130,7 +130,7 @@ class DBHub {
      *
      * @param {boolean} live A boolean to switch between returning the list of standard databases, and the list of live databases
      *
-     * @returns {Promise<object[]>}
+     * @returns {Promise<object[]|null>}
      */
     async get_databases(live = false) {
         const url = `${this.base_url}${this.endpoints.databases}`;
