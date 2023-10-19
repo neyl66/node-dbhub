@@ -25,6 +25,7 @@ class DBHub {
             columns: `/v${version}/columns`,
             commits: `/v${version}/commits`,
             databases: `/v${version}/databases`,
+            delete: `/v${version}/delete`,
             execute: `/v${version}/execute`,
             query: `/v${version}/query`,
         };
@@ -137,6 +138,25 @@ class DBHub {
 
         const parameters = {
             live,
+        };
+
+        const data = await this.make_request(url, parameters);
+
+        return data;
+    }
+
+    /**
+     * Deletes a database from the requesting users account
+     *
+     * @param {string} dbname The name of the database
+     *
+     * @returns {Promise<object>}
+     */
+    async delete_database(dbname) {
+        const url = `${this.base_url}${this.endpoints.delete}`;
+
+        const parameters = {
+            dbname,
         };
 
         const data = await this.make_request(url, parameters);
