@@ -26,6 +26,7 @@ class DBHub {
             commits: `/v${version}/commits`,
             databases: `/v${version}/databases`,
             delete: `/v${version}/delete`,
+            diff: `/v${version}/diff`,
             execute: `/v${version}/execute`,
             query: `/v${version}/query`,
         };
@@ -157,6 +158,39 @@ class DBHub {
 
         const parameters = {
             dbname,
+        };
+
+        const data = await this.make_request(url, parameters);
+
+        return data;
+    }
+
+    /**
+     * Generates a diff between two databases or two versions of a database
+     *
+     * @param {string} dbowner_a The owner of the first database
+     * @param {string} dbname_a The name of the first database
+     * @param {string} commit_a The commit ID of the first database
+     * @param {string} dbowner_b The owner of the second database
+     * @param {string} dbname_b The name of the second database
+     * @param {string} commit_b The commit ID of the second database
+     * @param {string} merge The merge strategy used for generating SQL statements (possible values: "none", "preserve_pk", "new_pk"; optional, defaults to "none")
+     * @param {string|number} include_data Set to "1" to include full row data of changed table rows
+     *
+     * @returns {Promise<object>}
+     */
+    async get_diff(dbowner_a, dbname_a, commit_a, dbowner_b, dbname_b, commit_b, merge = "none", include_data) {
+        const url = `${this.base_url}${this.endpoints.diff}`;
+
+        const parameters = {
+            dbowner_a,
+            dbname_a,
+            commit_a,
+            dbowner_b,
+            dbname_b,
+            commit_b,
+            merge,
+            include_data,
         };
 
         const data = await this.make_request(url, parameters);
