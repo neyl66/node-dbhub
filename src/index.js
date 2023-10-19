@@ -80,27 +80,6 @@ class DBHub {
         return data;
     }
 
-
-
-    /**
-     * Returns the list of databases in the requesting users account
-     *
-     * @param {boolean} live A boolean to switch between returning the list of standard databases, and the list of live databases
-     *
-     * @returns {Promise<object[]>}
-     */
-    async get_databases(live = false) {
-        const url = `${this.base_url}${this.endpoints.databases}`;
-
-        const parameters = {
-            live,
-        };
-
-        const data = await this.make_request(url, parameters);
-
-        return data;
-    }
-
     /**
      * Returns the details of all columns in a table or view, as per the SQLite "table_info" PRAGMA
      *
@@ -125,21 +104,17 @@ class DBHub {
     }
 
     /**
-     * Run a SQLite SELECT query on a database
+     * Returns the list of databases in the requesting users account
      *
-     * @param {string} dbowner The owner of the database
-     * @param {string} dbname The name of the database
-     * @param {string} sql The SQL query
+     * @param {boolean} live A boolean to switch between returning the list of standard databases, and the list of live databases
      *
-     * @returns {Promise<Array|null>}
+     * @returns {Promise<object[]>}
      */
-    async query(dbowner, dbname, sql) {
-        const url = `${this.base_url}${this.endpoints.query}`;
+    async get_databases(live = false) {
+        const url = `${this.base_url}${this.endpoints.databases}`;
 
         const parameters = {
-            dbowner,
-            dbname,
-            sql: btoa(sql),
+            live,
         };
 
         const data = await this.make_request(url, parameters);
@@ -158,6 +133,29 @@ class DBHub {
      */
     async execute(dbowner, dbname, sql) {
         const url = `${this.base_url}${this.endpoints.execute}`;
+
+        const parameters = {
+            dbowner,
+            dbname,
+            sql: btoa(sql),
+        };
+
+        const data = await this.make_request(url, parameters);
+
+        return data;
+    }
+
+    /**
+     * Run a SQLite SELECT query on a database
+     *
+     * @param {string} dbowner The owner of the database
+     * @param {string} dbname The name of the database
+     * @param {string} sql The SQL query
+     *
+     * @returns {Promise<Array|null>}
+     */
+    async query(dbowner, dbname, sql) {
+        const url = `${this.base_url}${this.endpoints.query}`;
 
         const parameters = {
             dbowner,
