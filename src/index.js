@@ -22,10 +22,11 @@ class DBHub {
 
         const endpoints = {
             branches: `/v${version}/branches`,
-            databases: `/v${version}/databases`,
             columns: `/v${version}/columns`,
-            query: `/v${version}/query`,
+            commits: `/v${version}/commits`,
+            databases: `/v${version}/databases`,
             execute: `/v${version}/execute`,
+            query: `/v${version}/query`,
         };
 
         return endpoints;
@@ -96,6 +97,27 @@ class DBHub {
             dbowner,
             dbname,
             table,
+        };
+
+        const data = await this.make_request(url, parameters);
+
+        return data;
+    }
+
+    /**
+     * Returns the details of all commits for a database
+     *
+     * @param {string} dbowner The owner of the database
+     * @param {string} dbname The name of the database
+     *
+     * @returns {Promise<object>}
+     */
+    async get_commits(dbowner, dbname) {
+        const url = `${this.base_url}${this.endpoints.commits}`;
+
+        const parameters = {
+            dbowner,
+            dbname,
         };
 
         const data = await this.make_request(url, parameters);
